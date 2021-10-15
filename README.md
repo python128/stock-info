@@ -30,4 +30,7 @@ It will give you a result such as this:
 - If you don't give any data, it will give an error.
 - If you give wrong data(ticker symbol is not correct), it will give an error.
 
+If you find any Issue or have a Feature Request, please open an issue.
+If you have an idea for a feature, please open a PR.
+
 #### PLEASE USE AT YOUR OWN RISK
