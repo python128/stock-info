@@ -20,6 +20,10 @@ Where:
 
 Leave no spaces after the commas in `data.csv`
 
+## Requirements
+- Python 3.7+ 
+- Certain [modules](./MODULES.md)
+
 ## Running
 After the configuration, we can run Stock-Info by running the following in `src`: `python main.py` OR `python3 main.py`
 
