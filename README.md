@@ -10,8 +10,8 @@ As simple as that!
 For this app to work, you need to provide a few details in `src/data.csv`.
 Format: (of configuration)
 ```
-"symbol",bp,sp # Ticker Symbol, Buy Price, Sell Price
-"HDFC",5000,10000 # Example
+"symbol",bp,sp # Ticker Symbol, Buy Price, Sell Price DON'T EDIT THIS LINE
+"HDFC",5000,10000 # Example 
 ```
 Where:
 - `Ticker Symbol` is the Symbol of the stock [Eg: for ICICI bank, the symbol is `ICICIBANK`].
