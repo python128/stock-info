@@ -13,8 +13,13 @@ def ret_tuple():
 		sys.exit(1)
 
 	for val in raw_data.values():
-		bp = val['bp']
-		sp = val['sp']
+		try:
+			bp = val['bp']
+			sp = val['sp']
+		except KeyError:
+			print("ERROR: \nPlease provide BP and SP")
+			sys.exit(1)
+
 		if bp > sp:
 			print("ERROR: \nYou will get wrong info. \nPlease make sure that SP is greater than BP in data.csv!! \nExiting..")
 			sys.exit(1)
