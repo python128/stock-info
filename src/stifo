@@ -3,33 +3,15 @@ from pprint import pprint
 import pandas as pd
 from tabulate import tabulate
 from jugaad_data.nse import NSELive
-import getopt
+import argparse
 
 def get_args():
-	input = {}
-	input['output']  = "fancy_grid"
+	parser = argparse.ArgumentParser()
+	parser.add_argument("file_name", help="File to read from(input file)")
+	parser.add_argument("-t","--type", help="Changes type to csv format", action="store_true")
 
-	helpmsg = """
-	Usage: stifo <input_file> -o <output_type>
-	Note: <input_file> is mandatory.
-	      <output_type> is optional.
-	"""
-
-	if sys.argv[1] == "--help" or sys.argv[1] == "-h":
-		print(helpmsg)
-		sys.exit()
-	else:
-		input['file'] = sys.argv[1]
-
-	argv = sys.argv[2:]
-
-	opts, args = getopt.getopt(argv, "ho:", ["help=", "output="])
-
-	for opt, arg in opts:
-		if opt in ['-o', '--output']:
-			input['output'] = arg
-			
-	return input
+	args = parser.parse_args()
+	return args
 
 def get_data(File):
 	raw_data = pd.read_csv(File, index_col=0).to_dict("index")
@@ -84,15 +66,15 @@ def round_off(data):
 			data[key][k] = rounded
 	return data
 
-input = get_args()
+args = get_args()
 
-ticker_data = get_data(input['file'])
+ticker_data = get_data(args.file_name)
 ticker_data = get_cp(ticker_data) # Gets cp
 
 final1 = round_off(ticker_data)
 final1 = compare(final1)
 
-if input['output'] == "csv":
+if args.type:
 	final = pd.DataFrame.from_dict(final1, orient='index')
 	final = final.to_csv().split('\n',1)[-1]
 else:
