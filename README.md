@@ -18,7 +18,8 @@ Where:
 - `Buy Price(BP)` is the price at which you would like to buy the stock.
 - `Sell Price(SP)` is the price at which you would like to sell the stock.
 
-Leave no spaces after the commas in `data.csv`
+You can have the BP and SP as either `float` or `int` values.
+No need to have the ticker symbol as string. 
 
 ## Requirements
 - Python 3.7+ 
