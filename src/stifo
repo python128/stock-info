@@ -34,10 +34,6 @@ def get_args():
 def get_data(File):
 	raw_data = pd.read_csv(File, index_col=0).to_dict("index")
 
-	# for val in raw_data.values():
-	# 	for v in val.values():
-	# 		print(round(v,2))
-
 	if raw_data == {}:
 		print("ERROR: \nPlease provide some ticker values along with BP and SP")
 		sys.exit(1)
