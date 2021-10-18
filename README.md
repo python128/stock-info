@@ -38,11 +38,11 @@ If you find any Issue or have a Feature Request, please open an issue.
 If you have an idea for a feature, please open a PR.
 
 ## TODO
-- [ ] Make a single file.
-- [ ] Add arguments.
-  - [ ] Input file [mandatory]
-  - [ ] Output type(csv, tabular, tsv, etc) [optional; default = tabular]
-  - [ ] Help message
+- [x] Make a single file.
+- [x] Add arguments.
+  - [x] Input file [mandatory]
+  - [x] Output type(csv, tabular, tsv, etc) [optional; default = tabular]
+  - [x] Help message
 - [ ] Package.
 
 #### PLEASE USE AT YOUR OWN RISK
