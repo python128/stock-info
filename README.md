@@ -38,6 +38,17 @@ After the configuration, we can run Stock-Info by running the following: `python
 It will give you a result such as this:
 ![Example Picture](./Stock-Info.jpg)
 
+```
+usage: stifo [-h] [-t] file_name
+
+positional arguments:
+  file_name   File to read from(input file)
+
+optional arguments:
+  -h, --help  Show this help message and exit
+  -t, --type  Changes type to csv format
+```
+
 ## Miscellaneous
 - If you don't give any data, it will give an error.
 - If you give wrong data(ticker symbol is not correct), it will give an error.
