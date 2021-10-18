@@ -30,7 +30,17 @@ No need to have the ticker symbol as string.
 
 ## Requirements
 - Python 3.7+ 
-- Certain [modules](./MODULES.md)
+- Certain modules:
+
+|Modules|Description|
+|--------|---------|
+|pprint | pre-installed with python |
+|pandas | pip install pandas |
+|tabulate | pip install tabulate |
+|sys | pre-installed with python |
+|jugaad_data | pip install jugaad-data |
+|argparse | pip install argparse |
+
 
 ## Running
 After the configuration, we can run Stock-Info by running the following: `python stifo` OR `python3 stifo`
