@@ -8,6 +8,10 @@ import sys
 def ret_tuple():
 	raw_data = pd.read_csv("./data.csv", index_col=0).to_dict("index")
 
+	if raw_data == {}:
+		print("ERROR: \nPlease provide some ticker values along with BP and SP")
+		sys.exit(1)
+
 	for val in raw_data.values():
 		bp = val['bp']
 		sp = val['sp']
