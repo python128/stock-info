@@ -6,7 +6,9 @@ from jugaad_data.nse import NSELive
 import argparse
 
 def get_args():
-	parser = argparse.ArgumentParser()
+	parser = argparse.ArgumentParser(description="A simple terminal app that gives you LIVE stock prices and advices you to buy, sell or keep your stocks based on the data given.",
+	epilog="Thank you for using stifo!")
+	
 	parser.add_argument("file_name", help="File to read from(input file)")
 	parser.add_argument("-t","--type", help="Changes type to csv format", action="store_true")
 
