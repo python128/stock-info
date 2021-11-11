@@ -23,7 +23,7 @@ Where:
 - `Buy Price(BP)` is the price at which you would like to buy the stock.
 - `Sell Price(SP)` is the price at which you would like to sell the stock.
 
-You can view the ticker symbols in [google finance](https://www.google.com/finance/). Please use the ticker symbols only.
+You can view the ticker symbols in [google finance](https://www.google.com/finance/). Please use the `NSE` ticker symbols only.
 
 You can have the BP and SP as either `float` or `int` values.
 No need to have the ticker symbol as string. 
