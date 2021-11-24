@@ -1,91 +1,103 @@
+#!/usr/bin/env python3
 import sys
-from pprint import pprint
+# from pprint import pprint
 import pandas as pd
 from tabulate import tabulate
 from jugaad_data.nse import NSELive
 import argparse
 
-def get_args():
-	parser = argparse.ArgumentParser(description="A simple terminal app that gives you LIVE stock prices and advices you to buy, sell or keep your stocks based on the data given.",
-	epilog="Thank you for using stifo!")
-	
-	parser.add_argument("file_name", help="File to read from(input file)")
-	parser.add_argument("-t","--type", help="Changes type to csv format", action="store_true")
 
-	args = parser.parse_args()
-	return args
+def get_args():
+    parser = argparse.ArgumentParser(description="A simple terminal app that \
+            gives you LIVE stock prices and advices you to buy, sell or keep \
+            your stocks based on the data given.",
+                                     epilog="Thank you for using stifo!")
+
+    parser.add_argument("file_name", help="File to read from(input file)")
+    parser.add_argument(
+        "-t", "--type", help="Changes type to csv format", action="store_true")
+
+    args = parser.parse_args()
+    return args
+
 
 def get_data(File):
-	raw_data = pd.read_csv(File, index_col=0).to_dict("index")
+    raw_data = pd.read_csv(File, index_col=0).to_dict("index")
 
-	if raw_data == {}:
-		print("ERROR: \nPlease provide some ticker values along with BP and SP")
-		sys.exit(1)
+    if raw_data == {}:
+        print("ERROR: \nPlease provide some ticker values along with BP and \
+            SP")
+        sys.exit(1)
 
-	for val in raw_data.values():
-		try:
-			bp = val['bp']
-			sp = val['sp']
-		except KeyError:
-			print("ERROR: \nPlease provide BP and SP")
-			sys.exit(1)
+    for val in raw_data.values():
+        try:
+            bp = val['bp']
+            sp = val['sp']
+        except KeyError:
+            print("ERROR: \nPlease provide BP and SP")
+            sys.exit(1)
 
-		if bp > sp:
-			print("ERROR: \nYou will get wrong info. \nPlease make sure that SP is greater than BP in data.csv!! \nExiting..")
-			sys.exit(1)
-		
-	return raw_data # Returns symbols, Buy Price, Sell Price
+        if bp > sp:
+            print("ERROR: \nYou will get wrong info. \nPlease make sure that \
+                    SP is greater than BP in data.csv!! \nExiting..")
+            sys.exit(1)
+
+    return raw_data  # Returns symbols, Buy Price, Sell Price
+
 
 def get_cp(ticker_data):
-	for ticker in ticker_data.keys():
-		n = NSELive() 
-		quote = n.stock_quote(ticker) # Gets the price
-		data = (quote['priceInfo']) 
-		cp_temp = data["lastPrice"] # Gets the actual Current Price
-		ticker_data[ticker]['cp'] = cp_temp
-	return ticker_data
+    for ticker in ticker_data.keys():
+        n = NSELive()
+        quote = n.stock_quote(ticker)  # Gets the price
+        data = (quote['priceInfo'])
+        cp_temp = data["lastPrice"]  # Gets the actual Current Price
+        ticker_data[ticker]['cp'] = cp_temp
+    return ticker_data
+
 
 def compare(ticker_data):
-	"""
-	if cp < bp:
-		final.append("buy")
-	elif cp > sp:
-		final.append("sell")
-	"""
-	for ticker in ticker_data:
-		if ticker_data[ticker]['cp'] < ticker_data[ticker]['bp']:
-			ticker_data[ticker]['status'] = 'buy'
-		elif ticker_data[ticker]['cp'] >= ticker_data[ticker]['sp']:
-			ticker_data[ticker]['status'] = 'sell'
-		else:
-			ticker_data[ticker]['status'] = 'keep'
-	return ticker_data
+    """
+    if cp < bp:
+            final.append("buy")
+    elif cp > sp:
+            final.append("sell")
+    """
+    for ticker in ticker_data:
+        if ticker_data[ticker]['cp'] < ticker_data[ticker]['bp']:
+            ticker_data[ticker]['status'] = 'buy'
+        elif ticker_data[ticker]['cp'] >= ticker_data[ticker]['sp']:
+            ticker_data[ticker]['status'] = 'sell'
+        else:
+            ticker_data[ticker]['status'] = 'keep'
+    return ticker_data
+
 
 def round_off(data):
-	for key, val in data.items():
-		for k, v in val.items():
-			rounded = round(v,2)
-			data[key][k] = rounded
-	return data
+    for key, val in data.items():
+        for k, v in val.items():
+            rounded = round(v, 2)
+            data[key][k] = rounded
+    return data
+
 
 args = get_args()
 
 ticker_data = get_data(args.file_name)
-ticker_data = get_cp(ticker_data) # Gets cp
+ticker_data = get_cp(ticker_data)  # Gets cp
 
 final1 = round_off(ticker_data)
 final1 = compare(final1)
 
 if args.type:
-	final = pd.DataFrame.from_dict(final1, orient='index')
-	final = final.to_csv().split('\n',1)[-1]
+    final = pd.DataFrame.from_dict(final1, orient='index')
+    final = final.to_csv().split('\n', 1)[-1]
 else:
-	final = pd.DataFrame.from_dict(final1, orient='index')
-	col = "status"
-	first_col = final.pop(col)
-	final.insert(0, col, first_col)
+    final = pd.DataFrame.from_dict(final1, orient='index')
+    col = "status"
+    first_col = final.pop(col)
+    final.insert(0, col, first_col)
 
-	headers = ['Status', 'BP', 'SP', 'CP']
-	final = tabulate(final, headers, tablefmt="fancy_grid")
+    headers = ['Status', 'BP', 'SP', 'CP']
+    final = tabulate(final, headers, tablefmt="fancy_grid")
 
 print(final)
